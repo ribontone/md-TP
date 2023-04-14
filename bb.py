@@ -21,8 +21,6 @@ import pyarrow.parquet as pq
 import glob
 
 
-
-
 #eplURL = './datasets/EPLMatches.csv'
 #datasetGames=pd.read_csv(eplURL)
 #datasetGames = datasetGames.drop(datasetGames.columns[0], axis=1)
@@ -47,19 +45,17 @@ df_sorted = df_sorted.reset_index(drop=True)
 
 datasetPosicoes=df_sorted
 
-
-
-
-
-
 del df,filename,key,df_sorted,missing_values
+
+
+
+
 
 """
 print o nome das colunas
 
 
-
-for name, df in data.items():
+for name, df in datasets.items():
     print(f" {name}:")
     print(' '.join(df.columns))
     print()  
