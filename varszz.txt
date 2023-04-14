@@ -1,0 +1,49 @@
+					BASE		(2000-01 | 2008-09):
+
+Div: Division
+Date: Match date
+HomeTeam: Home team name
+AwayTeam: Away team name
+FTHG: Full time home team goals
+FTAG: Full time away team goals
+FTR: Full time result
+HTHG: Half time home team goals
+HTAG: Half time away team goals
+HTR: Half time result
+Referee: Referee name
+HS: Home team shots
+AS: Away team shots
+HST: Home team shots on target
+AST: Away team shots on target
+HF: Home team fouls
+AF: Away team fouls
+HC: Home team corners
+AC: Away team corners
+HY: Home team yellow cards
+AY: Away team yellow cards
+HR: Home team red cards
+AR: Away team red cards
+Attendance: Match attendance   
+HHW: Home team hit woodwork
+AHW: Away team hit woodwork
+HO: Home team offsides
+AO: Away team offsides
+
+------------------------------------------------
+
+					2 		(2009-10 | 2011-12):
+
+Colunas extra: 
+B365H, B365D, B365A, BWH, BWD, BWA, GBH, GBD, GBA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, SJH, SJD, SJA, VCH, VCD, VCA, BSH, BSD, BSA, Bb1X2, BbMxH, BbAvH, BbMxD, BbAvD, BbMxA, BbAvA, BbOU, BbMx>2.5, BbAv>2.5, BbMx<2.5, BbAv<2.5, BbAH, BbAHh, BbMxAHH, BbAvAHH, BbMxAHA, BbAvAHA
+
+------------------------------------------------
+					3 		(2012-13 | 2015-16):
+
+Colunas extra:  
+B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD, WHA, VCH, VCD, VCA, Bb1X2, BbMxH, BbAvH, BbMxD, BbAvD, BbMxA, BbAvA, BbOU, BbMx>2.5, BbAv>2.5, BbMx<2.5, BbAv<2.5, BbAH, BbAHh, BbMxAHH, BbAvAHH, BbMxAHA, BbAvAHA
+
+------------------------------------------------
+					4		 (2016-17 | 2018-19):
+
+Colunas extra:  
+B365H, B365D, B365A, BWH, BWD, BWA, IWH, IWD, IWA, LBH, LBD, LBA, PSH, PSD, PSA, WHH, WHD
