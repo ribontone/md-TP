@@ -818,6 +818,8 @@ dataset_final_pmanipular = dataset_final.copy()
 
 
 
+
+
 #remover colunas 
 colunas_para_dropar = ['B365H', 'B365D', 'B365A', 'BWH', 'BWD', 'BWA', 'IWH', 'IWD', 'IWA', 'PSH',
                        'PSD', 'PSA', 'WHH', 'WHD', 'WHA', 'VCH', 'VCD', 'VCA', 'MaxH', 'MaxD',
@@ -833,7 +835,9 @@ colunas_para_dropar = ['B365H', 'B365D', 'B365A', 'BWH', 'BWD', 'BWA', 'IWH', 'I
                        'BbAvA', 'BbOU', 'BbMx>2.5', 'BbAv>2.5', 'BbMx<2.5', 'BbAv<2.5', 'BbAH',
                        'BbAHh', 'BbMxAHH', 'BbAvAHH', 'BbMxAHA', 'BbAvAHA',
                        'GBH', 'GBD', 'GBA', 'SBH', 'SBD', 'SBA', 'SJH', 'SJD', 'SJA', 'BSH', 'BSD', 'BSA',
+                       'Date','Season','form_h2h_Home','form_h2h_Away','form_L5_Home','form_L5_Away',
                        'HTHG', 'HTAG', 'HTR', 'Referee', 'HS', 'AS', 'HST', 'AST', 'HF', 'AF', 'HC', 'AC', 'HY', 'AY', 'HR', 'AR']
+	
 
 
 
@@ -852,6 +856,7 @@ drop_colunas(dataset_final_pmanipular, colunas_para_dropar)
 
 
 
+
 # Iterar pelos elementos da matriz de correlação
 """
 for i in range(len(correlation_matrix.columns)):
@@ -862,20 +867,14 @@ for i in range(len(correlation_matrix.columns)):
 """
 
 
-
-
-
 colunas_para_dropar2 = ['pontosCasa', 'pontosVis', 'pontosCasah2h', 'pontosAwayh2h', 'pontosCasaL5', 'pontosAwayL5', 
             'golosSofridosH2Haway', 'golosSofridosH2Hcasa', 'derrotash2hAWAY', 'empatesh2hAWAY', 'vitoriash2hAWAY',
               'diffGolosH2Haway'      ]
 
 
-print(4)
+
 drop_colunas(dataset_final_pmanipular, colunas_para_dropar2)
 
-
-
-print(4)
 
 # Criar a 2a matriz de correlação
 #correlation_matrix = dataset_final_pmanipular.corr()
@@ -896,13 +895,6 @@ for coluna in dataset_final_pmanipular.columns:
     #print(coluna, end=' ')
 
     
-   
-    
-    
-
-
-
-
 
 #scatter matrix
 #scatter_matrix(dataset_final_pmanipular[['diffGolosL5casa','diffGolosL5away','shots_on_targetHome','shots_on_targetAway','vitoriasL5HOME','vitoriasL5AWAY']], figsize=(30,30))
@@ -910,7 +902,8 @@ for coluna in dataset_final_pmanipular.columns:
 
 
 
-# Separar o conjunto de dados em features (X) e variável alvo (y)
+
+# Separar o dataframe em features (X) e variável alvo (y)
 X = dataset_final_pmanipular.drop('FTR', axis=1)
 y = dataset_final_pmanipular['FTR']
 
@@ -919,6 +912,18 @@ X_encoded = pd.get_dummies(X)
 
 # Dividir os dados em conjunto de treinamento e conjunto de teste
 X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=42)
+
+
+# num de features
+num_features = dataset_final_pmanipular.shape[1]
+
+# lista de features
+feature_list = dataset_final_pmanipular.columns.tolist()
+
+print("Num de features:", num_features)
+print("\nFeatures:", feature_list)
+print("\n")
+
 
 
 
@@ -977,12 +982,6 @@ print("Accuracy:", accuracy * 100)
 
 
 
-
-
-
-
-
-
    
 
 
@@ -994,7 +993,7 @@ print("Accuracy:", accuracy * 100)
 
 
 del df,filename,key,df_sorted,missing_values,ordem_colunas,cols,season
-del colunas_para_dropar
+
 
 
 """
