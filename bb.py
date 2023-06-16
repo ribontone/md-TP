@@ -31,12 +31,19 @@ import xgboost as xgb
 from sklearn.preprocessing import LabelEncoder
 
 
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+
+
+
 
 datasets = {}
 for filename in glob.glob('./datasets/20**-**.csv'):
     df = pd.read_csv(filename)
     key = filename.replace('.csv', '')
-    key = key.replace('./datasets\\', '')
+    key = key.replace('./datasets', '')
+    key = key.replace('/', '')
     datasets[key] = df
 
 
@@ -869,7 +876,7 @@ for i in range(len(correlation_matrix.columns)):
 
 colunas_para_dropar2 = ['pontosCasa', 'pontosVis', 'pontosCasah2h', 'pontosAwayh2h', 'pontosCasaL5', 'pontosAwayL5', 
             'golosSofridosH2Haway', 'golosSofridosH2Hcasa', 'derrotash2hAWAY', 'empatesh2hAWAY', 'vitoriash2hAWAY',
-              'diffGolosH2Haway'      ]
+              'diffGolosH2Haway' , 'HomeTeam', 'AwayTeam'     ]
 
 
 
@@ -884,7 +891,7 @@ drop_colunas(dataset_final_pmanipular, colunas_para_dropar2)
 
 
     
-colunas_para_dropar3 = ['FTHG', 'FTAG','Date' ]
+colunas_para_dropar3 = ['FTR','Date' ]
 
 drop_colunas(dataset_final_pmanipular, colunas_para_dropar3)    
 
@@ -901,11 +908,10 @@ for coluna in dataset_final_pmanipular.columns:
 
 
 
-
-
-# Separar o dataframe em features (X) e variável alvo (y)
-X = dataset_final_pmanipular.drop('FTR', axis=1)
-y = dataset_final_pmanipular['FTR']
+"""
+# Separar o dataframe em features (X) e variáveis alvo (y)
+X = dataset_final_pmanipular.drop(['FTHG', 'FTAG'], axis=1)
+y = dataset_final_pmanipular[['FTHG', 'FTAG']]
 
 # Pré-processamento para lidar com variáveis categóricas usando codificação one-hot
 X_encoded = pd.get_dummies(X)
@@ -913,17 +919,7 @@ X_encoded = pd.get_dummies(X)
 # Dividir os dados em conjunto de treinamento e conjunto de teste
 X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=42)
 
-
-# num de features
-num_features = dataset_final_pmanipular.shape[1]
-
-# lista de features
-feature_list = dataset_final_pmanipular.columns.tolist()
-
-print("Num de features:", num_features)
-print("\nFeatures:", feature_list)
-print("\n")
-
+"""
 
 
 
@@ -937,33 +933,102 @@ model = LogisticRegression()
 # Treinar o modelo
 model.fit(X_train, y_train)
 
-# Fazer previsões com base nos recursos do conjunto de teste
-y_pred = model.predict(X_test)
+# Fazer previsões com base nos recursos do conjunto de testey_pred = model.predict(X_test)
 
-# Calcular a acurácia do modelo
+# Calcular a Accuracy do modelo
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy*100)
 """
 
 #RandomFOREST
 
-
-# Criar uma instância do modelo Random Forest
+"""
+# modelo Random Forest
 model = RandomForestClassifier()
 
-# Treinar o modelo
 model.fit(X_train, y_train)
 
-# Fazer previsões com base nos recursos do conjunto de teste
 y_pred = model.predict(X_test)
 
-# Calcular a acurácia do modelo
-accuracy = accuracy_score(y_test, y_pred)
-print("Accuracy:", accuracy * 100)
+# Calcular a Accuracy do modelo
+#accuracy = accuracy_score(y_test, y_pred)
+#print("Accuracy:", accuracy * 100)
+
+"""
+
+"""
+
+from sklearn.metrics import mean_squared_error
 
 
 
-###RANDOM GRID
+# Calcula o MSE para cada coluna
+mse_fthg = mean_squared_error(y_test['FTHG'], y_pred[:, 0])
+mse_ftag = mean_squared_error(y_test['FTAG'], y_pred[:, 1])
+
+print(f"MSE for 'FTHG': {mse_fthg}")
+print(f"MSE for 'FTAG': {mse_ftag}")
+
+"""
+
+
+#best 2 variables
+
+# Separar o dataframe em features e target
+X = dataset_final_pmanipular.drop(['FTHG', 'FTAG'], axis=1)
+y1 = dataset_final_pmanipular['FTHG']
+y2 = dataset_final_pmanipular['FTAG']
+
+
+X_encoded = pd.get_dummies(X)
+
+
+X_train, X_test, y1_train, y1_test, y2_train, y2_test = train_test_split(X_encoded, y1, y2, test_size=0.2, random_state=42)
+
+
+# num de features
+num_features = dataset_final_pmanipular.shape[1]
+
+# lista de features
+feature_list = dataset_final_pmanipular.columns.tolist()
+
+print("Num de features:", num_features)
+print("\nFeatures:", feature_list)
+print("\n")
+
+
+# modelos Random Forest
+model1 = RandomForestRegressor()
+model2 = RandomForestRegressor()
+
+# Treinar os modelos
+model1.fit(X_train, y1_train)
+model2.fit(X_train, y2_train)
+
+# Previsões
+y1_pred = model1.predict(X_test)
+y2_pred = model2.predict(X_test)
+
+# Calcular o MSE para cada modelo
+mse_fthg = mean_squared_error(y1_test, y1_pred)
+mse_ftag = mean_squared_error(y2_test, y2_pred)
+
+print(f"MSE for 'FTHG': {mse_fthg}")
+print(f"MSE for 'FTAG': {mse_ftag}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1448,7 +1513,6 @@ gammmm = gammmm.loc[(gammmm['competition_id'] == 'GB1') & (gammmm['season'] == 2
 -----------------------------------
 
 """
-
 
 
 
